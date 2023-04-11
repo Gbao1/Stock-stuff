@@ -1,0 +1,76 @@
+<html>
+<head>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./nav.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script src="./exchangeInfo.js"></script>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <title>Trading view</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2>Chứng khoán stuff</h2>
+            <ul>
+                <li><a href="./news.html"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="./ranking.html"><i class="fas fa-user"></i>Crypto Live</a></li>
+                <li><a href="./chartView.html"><i class="fas fa-address-card"></i>Chart view</a></li>
+                <li><a href="./contact.html"><i class="fas fa-address-book"></i>Contact</a></li>
+            </ul> 
+            <div class="social_media">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="main_content">
+            <div class="header">Wassup</div>  
+            <div class="info">
+              <div><select onChange="LoadCharts();" id="pairs">
+                <!--    <option value="BTCUSDT">BTCUSDT</option>
+                    <option value="ETHUSDT">ETHUSDT</option>-->
+                </select>
+                <br>
+                <div class="tradingview-widget-container" id="tvchart"></div></div>
+          </div>
+        </div>
+    </div>
+
+</body>
+<script>
+
+
+//PASS ALL THE SYMBOLS 
+var sym = exchangeInfo.symbols,markup='';
+sym.forEach(d => {
+    markup += '<option value="' + d.symbol + '">' + d.symbol + '</option>';
+});
+document.getElementById('pairs').innerHTML = markup;
+  
+LoadCharts();    
+function LoadCharts(){
+    let symbol = document.getElementById('pairs').value;
+    //RENDER CHART
+    new TradingView.widget(
+      {
+  "autosize": true,
+  "symbol": "BINANCE:" + symbol,
+  "interval": "5",
+  "timezone": "Asia/Kolkata",
+  "theme": "Light",
+  "style": "1",
+  "locale": "in",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "allow_symbol_change": true,
+  "studies": [
+    "AwesomeOscillator@tv-basicstudies",
+    "MACD@tv-basicstudies",
+    "RSI@tv-basicstudies"
+  ],
+  "container_id": "tvchart"
+    });
+}
+    
+</script>
+</html>
